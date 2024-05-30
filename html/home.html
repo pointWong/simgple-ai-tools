@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enter a URL</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="/js/front/request.js"></script>
+</head>
+
+<body>
+  <div class="flex justify-center items-start w-screen pt-2">
+    <div>
+      <div>输入网站地址即可快速了解该网站的功能</div>
+      <div class="mt-3">
+        <input class="border-2 border-solid border-gray-300 rounded-md h-12 min-w-[500px] px-3 w-full" type="url" id="url"
+          placeholder="输入一个网址并点确定">
+      </div>
+      <div class="mt-2">
+        <div id="submit"
+          class="px-3 py-1 bg-blue-500 rounded-md text-center text-white hover:bg-blue-600 transition-colors cursor-pointer">
+          确定</div>
+      </div>
+      <div class="mt-5">
+        <div>其他功能</div>
+        <div class="grid grid-cols-3 mt-2">
+          <a class="text-blue-500" href="/html/ask.html">问题</a>
+          <a class="text-blue-500" href="/html/translate.html">翻译</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="content" class="mt-3 whitespace-pre-wrap p-3 max-w-[500px]"></div>
+</body>
+<script>
+  const submitEl = document.getElementById('submit')
+  const urlEl = document.getElementById('url')
+  const contentEl = document.getElementById('content')
+
+  submitEl.addEventListener('click', async () => {
+    const url = urlEl.value
+    console.log("🚀 ~ submitEl.addEventListener ~ url:", url)
+    const { content } = await ajaxRequest('POST', '/wssay/scaning-website', { url })
+    contentEl.innerHTML = content
+  })
+</script>
+
+</html>
