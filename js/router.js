@@ -9,7 +9,7 @@ module.exports = async function (req, res) {
     case /^\/wssay\/ask-some-question/.test(url):
       routes.askQuestion(req, res)
       break
-    case /^\/wssay\/translate-single-word/.test(url):
+    case /^\/wssay\/translate/.test(url):
       routes.translate(req, res)
       break
     case /[.]*\.(css|js|html)/.test(url):
