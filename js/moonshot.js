@@ -17,12 +17,12 @@ async function moonShotChat (messages) {
   return completion.choices[0].message.content
 }
 
-async function translateViaMs ({ message, target = '英语' }) {
+async function translateViaMs ({ message, lang = "中文", target = '英语' }) {
   let result = ''
   const messages = [
     {
       role: 'system',
-      content: `你是一个翻译家，你会根据我提供的文本，将其翻译成${target}，你只需直接给我返回翻译结果，无需其他过多说明，现在请你帮忙翻译的第一段文本是：`
+      content: `你现在是个翻译家，你将会精确翻译我提供给你的文本，我需要你将${lang || "中文"}翻译成${target || "英文"},你仅仅告诉我翻译结果就行，无需其他描述，现在需要你翻译的第一段文本是`
     },
     {
       role: 'user',
