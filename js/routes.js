@@ -2,8 +2,8 @@ const path = require('path');
 const { readFile } = require("./file")
 const { setContentTypeByUrl, readRequestBody, getUrlParams } = require('./util');
 const { start } = require('./request.js');
-const { sendMessageToXfxhNormal, sendMessageToXfxhForTranslate } = require('./xfhxAi.js');
-const { msTranslate, msAnswer } = require('./moonshot.js');
+const { answerFromXfxh, translateViaXfxh } = require('./xfhxAi.js');
+const { translateViaMs, answerFromMs } = require('./moonshot.js');
 
 async function home (res) {
   try {
@@ -47,9 +47,9 @@ async function askQuestion (req, res) {
 
 async function waitAnswer (content, host) {
   let result = ''
-  result = await msAnswer({ message: content })
+  result = await answerFromMs({ message: content })
   if (result) return result
-  result = await sendMessageToXfxhNormal(content, host)
+  result = await answerFromXfxh(content, host)
   return result
 }
 
@@ -68,9 +68,9 @@ async function translate (req, res) {
 
 async function awaitTranslate (options) {
   console.log("🚀 ~ translate ~ options:", options)
-  let response = await msTranslate(options)
+  let response = await translateViaMs(options)
   if (response) return response
-  response = await sendMessageToXfxhForTranslate(options)
+  response = await translateViaXfxh(options)
   if (response) return response
   return ""
 }

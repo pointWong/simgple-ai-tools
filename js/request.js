@@ -1,10 +1,10 @@
-const { extractTextFromHTML, extractLinks, sleep, joinUrl } = require("./util")
+const {  extractLinks, sleep, joinUrl, extractTextFromHTML } = require("./util")
 const https = require('https');
 const http = require('http')
-const { sendMessageXfxhForSumerize } = require("./xfhxAi");
+const { extractMainContentViaXfhx } = require("./xfhxAi");
 
 const URL = require('url');
-const { msSumarize } = require("./moonshot");
+const { extractMainContentViaMs } = require("./moonshot");
 let urlorigin
 let linksList = []
 let urlInContent = []
@@ -25,9 +25,9 @@ async function start (url, level = 0, language) {
 
 async function extractMainContent (content) {
   let result = ''
-  result = await msSumarize({ message: content }) //moonshot
+  result = await extractMainContentViaMs({ message: content }) //moonshot
   if (result) return result
-  result = await sendMessageXfxhForSumerize(content) // 讯飞星火
+  result = await extractMainContentViaXfhx(content) // 讯飞星火
   return result
 }
 
@@ -35,7 +35,7 @@ async function requestStart (url, level) {
   let content = ''
   try {
     const res = await request(url, urlorigin)
-    content += extractTextFromHTML(res) // 提取出文本内容
+    content += extractTextFromHTML(res)
     const linksInContent = extractLinks(res) //从内容中提取出所有链接
     urlInContent = [...urlInContent, ...linksInContent].reduce((acc, cur) => {
       if (linksList.indexOf(cur) === -1 && acc.indexOf(cur) == -1) {

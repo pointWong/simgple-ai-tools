@@ -17,7 +17,7 @@ async function moonShotChat (messages) {
   return completion.choices[0].message.content
 }
 
-async function msTranslate ({ message, target = '英语' }) {
+async function translateViaMs ({ message, target = '英语' }) {
   let result = ''
   const messages = [
     {
@@ -32,18 +32,18 @@ async function msTranslate ({ message, target = '英语' }) {
   try {
     result = await moonShotChat(messages)
   } catch (error) {
-    console.log("🚀 ~ msTranslate ~ error:", error)
+    console.log("🚀 ~ translateViaMs ~ error:", error)
 
   }
   return result
 }
 
-async function msSumarize ({ message }) {
+async function extractMainContentViaMs ({ message }) {
   let result = ''
   const messages = [
     {
       role: 'system',
-      content: `你是一个摘要生成器，你会根据我提供的文本，生成一个摘要，你只需直接给我返回摘要，无需其他过多说明，现在请你帮忙生成的第一段文本是：`
+      content: `你是一个文案整理高手，你将会根据我提供的杂乱的文本中整理出主要内容并详细列举出来，然后告诉我结果，现在我需要你整理的第一段文本是：`
     },
     {
       role: 'user',
@@ -53,12 +53,12 @@ async function msSumarize ({ message }) {
   try {
     result = await moonShotChat(messages)
   } catch (error) {
-    console.log("🚀 ~ msSumarize ~ error:", error)
+    console.log("🚀 ~ extractMainContentViaMs ~ error:", error)
   }
   return result
 }
 
-async function msAnswer ({ message }) {
+async function answerFromMs ({ message }) {
   let result = ''
   const messages = [
     {
@@ -73,13 +73,13 @@ async function msAnswer ({ message }) {
   try {
     result = await moonShotChat(messages)
   } catch (error) {
-    console.log("🚀 ~ msAnswer ~ error:", error)
+    console.log("🚀 ~ answerFromMs ~ error:", error)
   }
   return result
 }
 
 module.exports = {
-  msTranslate,
-  msSumarize,
-  msAnswer
+  translateViaMs,
+  extractMainContentViaMs,
+  answerFromMs
 }
