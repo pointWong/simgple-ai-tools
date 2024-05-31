@@ -3,7 +3,7 @@ const { readFile } = require("./file")
 const { setContentTypeByUrl, readRequestBody, getUrlParams } = require('./util');
 const { start } = require('./request.js');
 const { sendMessageToXfxhNormal, sendMessageToXfxhForTranslate } = require('./xfhxAi.js');
-const { msTranslate } = require('./moonshot.js');
+const { msTranslate, msAnswer } = require('./moonshot.js');
 
 async function home (res) {
   try {
@@ -40,9 +40,17 @@ async function askQuestion (req, res) {
   }
   const row = await readRequestBody(req)
   const { content } = row
-  const response = await sendMessageToXfxhNormal(content, req.headers.host)
+  const response = await waitAnswer(content, req.headers.host)
   res.writeHead(200, { "content-type": "application/json" })
   res.end(JSON.stringify({ isOk: true, content: response }))
+}
+
+async function waitAnswer (content, host) {
+  let result = ''
+  result = await msAnswer({ message: content })
+  if (result) return result
+  result = await sendMessageToXfxhNormal(content, host)
+  return result
 }
 
 async function translate (req, res) {

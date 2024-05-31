@@ -3,7 +3,8 @@ const https = require('https');
 const http = require('http')
 const { sendMessageXfxhForSumerize } = require("./xfhxAi");
 
-const URL = require('url')
+const URL = require('url');
+const { msSumarize } = require("./moonshot");
 let urlorigin
 let linksList = []
 let urlInContent = []
@@ -23,7 +24,10 @@ async function start (url, level = 0, language) {
 }
 
 async function extractMainContent (content) {
-  let result = await sendMessageXfxhForSumerize(content)
+  let result = ''
+  result = await msSumarize({ message: content }) //moonshot
+  if (result) return result
+  result = await sendMessageXfxhForSumerize(content) // 讯飞星火
   return result
 }
 
