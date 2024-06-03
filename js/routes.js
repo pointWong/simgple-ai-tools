@@ -16,7 +16,7 @@ async function home (res) {
 
 async function sendAssets (req, res) {
   try {
-    const url = req.url;
+    const url = req.url.replace('/wssay','');
     const filepath = path.join(process.cwd(), url);
     const content = await readFile(filepath)
     res.writeHead(200, { "content-type": setContentTypeByUrl(url) })

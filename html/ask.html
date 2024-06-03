@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>提问</title>
-  <link rel="stylesheet" href="/css/main.css">
-  <script src="/js/front/request.js"></script>
+  <link rel="stylesheet" href="/wssay/css/main.css">
+  <script src="/wssay/js/front/request.js"></script>
 </head>
 
 <body>
@@ -32,7 +32,7 @@
   const testBtn = document.getElementById('test')
 
   testBtn.addEventListener('click', async () => {
-    const { content } = await ajaxRequest("POST", '/wssay/ask-some-question', { content: urlEl.value })
+    const { content } = await ajaxRequest("POST", '/wssay/api/ask-some-question', { content: urlEl.value })
     contentEl.innerHTML = content
   })
 

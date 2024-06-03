@@ -103,7 +103,7 @@ async function waitForResponse () {
 }
 // 翻译
 async function translateViaXfxh ({ message, target, lang = '中文', hostname }) {
-  const prompt = `你现在是个翻译家，你将会精确翻译我提供给你的文本，我需要你将${lang || "中文"}翻译成${target || "英文"},你仅仅告诉我翻译结果就行，无需其他描述，现在需要你翻译的第一段文本是：${message}`
+  const prompt = `你现在是个翻译家，你将会精确翻译我提供给你的文本，我需要你将${lang || "中文"}翻译成${target || "英文"},你只需告诉我翻译结果，无需其他描述，现在需要你翻译的第一段文本是：${message}`
   // { "role": "user", "content": message }
   console.log("🚀 ~ translateViaXfxh ~ prompt:", prompt)
   const content = await sendMessageToXfxh([{ "role": "user", "content": prompt }], hostname)

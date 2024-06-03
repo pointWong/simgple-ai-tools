@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Enter a URL</title>
-  <link rel="stylesheet" href="/css/main.css">
-  <script src="/js/front/request.js"></script>
+  <link rel="stylesheet" href="/wssay/css/main.css">
+  <script src="/wssay/js/front/request.js"></script>
 </head>
 
 <body>
@@ -33,7 +33,7 @@
   const contentEl = document.getElementById('content')
   const translateEl = document.getElementById('translate')
   translateEl.addEventListener('click', async () => {
-    const { content } = await ajaxRequest("GET", '/wssay/translate-single-word', { content: urlEl.value, target: '英语' })
+    const { content } = await ajaxRequest("GET", '/wssay/api/translate-single-word', { content: urlEl.value, target: '英语' })
     contentEl.innerHTML = content
   })
 </script>
