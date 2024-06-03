@@ -33,7 +33,8 @@
   const contentEl = document.getElementById('content')
   const translateEl = document.getElementById('translate')
   translateEl.addEventListener('click', async () => {
-    const { content } = await ajaxRequest("GET", '/wssay/api/translate-single-word', { content: urlEl.value, target: '英语' })
+    if (!urlEl.value) return
+    const { content } = await ajaxRequest("GET", '/wssay/api/translate', { content: urlEl.value, target: '英语' })
     contentEl.innerHTML = content
   })
 </script>

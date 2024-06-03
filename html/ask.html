@@ -32,6 +32,7 @@
   const testBtn = document.getElementById('test')
 
   testBtn.addEventListener('click', async () => {
+    if (!urlEl.value) return
     const { content } = await ajaxRequest("POST", '/wssay/api/ask-some-question', { content: urlEl.value })
     contentEl.innerHTML = content
   })

@@ -1,4 +1,4 @@
-const {  extractLinks, sleep, joinUrl, extractTextFromHTML } = require("./util")
+const { extractLinks, sleep, joinUrl, extractTextFromHTML } = require("./util")
 const https = require('https');
 const http = require('http')
 const { extractMainContentViaXfhx } = require("./xfhxAi");
@@ -17,6 +17,7 @@ async function start (url, level = 0, language) {
   const dd = URL.parse(url)
   urlorigin = (dd.protocol || 'https') + '//' + dd.host
   linksList = []//清空
+  urlInContent = []
   diglevel = 0
   let content = await requestStart(url, level)
   res = await extractMainContent(content)
@@ -36,6 +37,7 @@ async function requestStart (url, level) {
   try {
     const res = await request(url, urlorigin)
     content += extractTextFromHTML(res)
+    console.log("🚀 ~ requestStart ~ content:", content)
     const linksInContent = extractLinks(res) //从内容中提取出所有链接
     urlInContent = [...urlInContent, ...linksInContent].reduce((acc, cur) => {
       if (linksList.indexOf(cur) === -1 && acc.indexOf(cur) == -1) {
@@ -105,6 +107,7 @@ async function request (url, urlorigin) {
   let content = ''
   try {
     content = await requestByhttp(url)
+    console.log("🚀 ~ request ~ content:", content)
   } catch (error) {
     console.log("🚀 ~ request ~ error1:", error)
   }
